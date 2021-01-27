@@ -8,21 +8,34 @@ const toDoArray = [];
 
 function divCreator(priority, date, content) {
   const todoContainer = document.createElement("div");
-  todoContainer.classList.add = "todo-container";
-  const todoPriority = document.createElement("div");
-  todoPriority.classList.add = "todo-priority";
-  todoPriority.innerText = priority;
-  const todoCreatedAt = document.createElement("div");
-  todoCreatedAt.classList.add = "todo-created-at";
-  todoCreatedAt.innerText = date;
+  todoContainer.classList.add("todo-container");
   const todoText = document.createElement("div");
-  todoText.classList.add = "todo-text";
+  todoText.classList.add("todo-text");
   todoText.innerText = content;
-
-  todoContainer.appendChild(todoPriority);
-  todoContainer.appendChild(todoCreatedAt);
+  const todoCreatedAt = document.createElement("div");
+  todoCreatedAt.classList.add("todo-created-at");
+  todoCreatedAt.innerText =
+    date.getFullYear() +
+    "-" +
+    date.getMonth() +
+    1 +
+    "-" +
+    date.getDate() +
+    " " +
+    date.getHours() +
+    ":" +
+    date.getMinutes() +
+    ":" +
+    date.getSeconds();
+  const todoPriority = document.createElement("div");
+  todoPriority.classList.add("todo-priority");
+  todoPriority.innerText = priority;
   todoContainer.appendChild(todoText);
-  viewSection.appendChild(todoContainer);
+  todoContainer.appendChild(todoCreatedAt);
+  todoContainer.appendChild(todoPriority);
+  const li = document.createElement("li");
+  li.appendChild(todoContainer);
+  theList.appendChild(li);
 }
 
 function addToDo() {
@@ -31,8 +44,13 @@ function addToDo() {
     date: new Date(),
     content: textInput.value,
   });
-
-  todoContainer.innerText = "nisan";
+  divCreator(
+    toDoArray[toDoArray.length - 1]["priority"],
+    toDoArray[toDoArray.length - 1]["date"],
+    toDoArray[toDoArray.length - 1]["content"]
+  );
+  textInput.value = "";
+  textInput.focus();
 }
 
 addButton.addEventListener("click", addToDo);
