@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="stylesheet" href="./style.css" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My TODO List</title>
@@ -11,6 +12,7 @@
       <h1>Maor's To-Do-List</h1>
     </header>
     <section class="control-section" id="control-section">
+      <div id="counter">0</div>
       <input type="text" id="text-input" placeholder="To-Do" value="" />
       <select name="priority-selector" id="priority-selector">
         <option value="1">1</option>
@@ -20,6 +22,7 @@
         <option value="5">5</option>
       </select>
       <button id="add-button">Add</button>
+      <button id="sort-button">Sort</button>
     </section>
     <section class="view-section" id="view-section">
       <ul id="the-list"></ul>
