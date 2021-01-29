@@ -41,12 +41,18 @@ function divCreator(priority, date, content) {
   todoPriority.classList.add("todo-priority");
   todoPriority.innerText = priority;
   const deleteButton = document.createElement("button");
+  const deleteIcon = document.createElement("i");
+  deleteIcon.classList.add("material-icons");
   deleteButton.classList.add("delete-button");
-  deleteButton.innerText = "Delete";
+  deleteIcon.innerText = "delete";
+  deleteButton.addEventListener("click", () => {
+    todoContainer.parentNode.style.display = "none";
+  });
   todoContainer.appendChild(todoText);
   todoContainer.appendChild(todoCreatedAt);
   todoContainer.appendChild(todoPriority);
   todoContainer.appendChild(deleteButton);
+  deleteButton.appendChild(deleteIcon);
   const li = document.createElement("li");
   li.appendChild(todoContainer);
   theList.appendChild(li);
@@ -83,5 +89,6 @@ function sort() {
   for (let todo of toDoArray["my-todo"]) {
     divCreator(todo["priority"], todo["date"], todo["content"]);
   }
+  localStorage.setItem("my-array", JSON.stringify(toDoArray));
 }
 sortButton.addEventListener("click", sort);
