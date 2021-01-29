@@ -1,9 +1,111 @@
 body {
   text-align: center;
+  background-color: #d9dbd5;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+
+ul {
+  width: 50%;
+  margin: auto;
 }
 .todo-container {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  margin: auto;
+  margin: 1%;
+  padding: 1%;
+}
+#header {
+  background-color: #009688;
+  color: #ededed;
+  margin-top: 0%;
+}
+#header > h1 {
+  margin-top: 0%;
+  font-size: 300%;
+}
+li {
+  background-color: #f8f9fa;
+}
+li::marker {
+  background-color: #f8f9fa;
+}
+#add-button,
+#sort-button {
+  box-shadow: inset 0px 1px 0px 0px #fff6af;
+  background: linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+  background-color: #ffec64;
+  border-radius: 6px;
+  border: 1px solid #ffaa22;
+  display: inline-block;
+  cursor: pointer;
+  color: #333333;
+  font-family: Arial;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 6px 24px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #ffee66;
+}
+#add-button:hover,
+#sort-button:hover {
+  background: linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
+  background-color: #ffab23;
+}
+#add-button:active,
+#sort-button:active {
+  position: relative;
+  top: 1px;
+}
+.delete-button {
+  -moz-box-shadow: inset 0px 1px 0px 0px #f5978e;
+  -webkit-box-shadow: inset 0px 1px 0px 0px #f5978e;
+  box-shadow: inset 0px 1px 0px 0px #f5978e;
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0.05, #f24537),
+    color-stop(1, #c62d1f)
+  );
+  background: -moz-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+  background: -webkit-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+  background: -o-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+  background: -ms-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+  background: linear-gradient(to bottom, #f24537 5%, #c62d1f 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f',GradientType=0);
+  background-color: #f24537;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  border: 1px solid #d02718;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 6px 24px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #810e05;
+}
+.delete-button:hover {
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0.05, #c62d1f),
+    color-stop(1, #f24537)
+  );
+  background: -moz-linear-gradient(top, #c62d1f 5%, #f24537 100%);
+  background: -webkit-linear-gradient(top, #c62d1f 5%, #f24537 100%);
+  background: -o-linear-gradient(top, #c62d1f 5%, #f24537 100%);
+  background: -ms-linear-gradient(top, #c62d1f 5%, #f24537 100%);
+  background: linear-gradient(to bottom, #c62d1f 5%, #f24537 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c62d1f', endColorstr='#f24537',GradientType=0);
+  background-color: #c62d1f;
+}
+.delete-button:active {
+  position: relative;
+  top: 1px;
 }

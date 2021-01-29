@@ -40,9 +40,13 @@ function divCreator(priority, date, content) {
   const todoPriority = document.createElement("div");
   todoPriority.classList.add("todo-priority");
   todoPriority.innerText = priority;
+  const deleteButton = document.createElement("button");
+  deleteButton.classList.add("delete-button");
+  deleteButton.innerText = "Delete";
   todoContainer.appendChild(todoText);
   todoContainer.appendChild(todoCreatedAt);
   todoContainer.appendChild(todoPriority);
+  todoContainer.appendChild(deleteButton);
   const li = document.createElement("li");
   li.appendChild(todoContainer);
   theList.appendChild(li);
