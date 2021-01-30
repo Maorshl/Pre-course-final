@@ -48,6 +48,9 @@ function divCreator(priority, date, content) {
   deleteButton.addEventListener("click", () => {
     todoContainer.parentNode.style.display = "none";
   });
+  const check = document.createElement("input");
+  check.setAttribute("type", "checkbox");
+  todoContainer.appendChild(check);
   todoContainer.appendChild(todoText);
   todoContainer.appendChild(todoCreatedAt);
   todoContainer.appendChild(todoPriority);
