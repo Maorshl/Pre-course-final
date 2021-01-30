@@ -1,3 +1,4 @@
+"use strict";
 const controlSection = document.getElementById("control-section");
 const viewSection = document.getElementById("view-section");
 const prioritySelector = document.getElementById("priority-selector");
@@ -27,7 +28,7 @@ function elementCreator(element, className, text = null, appendTo = null) {
   todoText.innerText = text;
   appendTo.appendChild(todoText);
 }
-// creating the divs and appending it to the list in the view section
+// creating the divs and the elements inside and appending it to the list in the view section
 function divCreator(priority, date, content) {
   const todoContainer = document.createElement("div");
   todoContainer.classList.add("todo-container");
@@ -49,6 +50,7 @@ function divCreator(priority, date, content) {
     todoContainer.parentNode.style.display = "none";
   });
   const check = document.createElement("input");
+  check.classList.add("check-box");
   check.setAttribute("type", "checkbox");
   todoContainer.appendChild(check);
   todoContainer.appendChild(todoText);

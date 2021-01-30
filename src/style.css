@@ -29,7 +29,7 @@ li {
   list-style-type: none;
 }
 li:nth-child(odd) {
-  background-color: #f8f9fa;
+  background-color: rgba(224, 224, 224, 0.6);
 }
 .list-headers {
   display: flex;
@@ -93,4 +93,8 @@ li:nth-child(odd) {
 }
 #created-by {
   margin-top: 3%;
+}
+.check-box {
+  width: 16px;
+  height: 16px;
 }
