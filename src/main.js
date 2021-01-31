@@ -1,8 +1,8 @@
 "use strict";
-// const myKey = "$2b$10$BGGGF8ElZbzLBwv5fGJ5zOtgmBQcZgpCYvK6RJuDfjxK/ZU4vFt6.";
-// let id = "60166ab713b20d48e8bf6d48";
-// const apiUrl = `https://api.jsonbin.io/v3/b/${id}/latest`;
-
+const myKey = "$2b$10$BGGGF8ElZbzLBwv5fGJ5zOtgmBQcZgpCYvK6RJuDfjxK/ZU4vFt6.";
+let id = "60166ab713b20d48e8bf6d48";
+const apiUrl = `https://api.jsonbin.io/v3/b/${id}`;
+let isdarkmode = false;
 const controlSection = document.getElementById("control-section");
 const viewSection = document.getElementById("view-section");
 const prioritySelector = document.getElementById("priority-selector");
@@ -15,18 +15,16 @@ let listIndex = 0;
 let toDoArray = {
   "my-todo": [],
 };
-function onload() {
-  const saved = JSON.parse(localStorage.getItem("my-array"));
+async function onload() {
+  const saved = await getTasks();
   for (let todo of saved["my-todo"]) {
-    divCreator(todo["priority"], todo["date"], todo["content"]);
+    divCreator(todo["priority"], todo["date"], todo["text"]);
     toDoArray = saved;
     counter.innerText = toDoArray["my-todo"].length;
   }
   listIndex = 0;
 }
-if (localStorage.getItem("my-array") !== null) {
-  onload();
-}
+onload();
 
 function elementCreator(element, className, text = null, appendTo = null) {
   const todoText = document.createElement(element);
@@ -55,10 +53,10 @@ function divCreator(priority, date, content) {
   deleteButton.addEventListener("click", () => {
     todoContainer.parentNode.style.display = "none";
     toDoArray["my-todo"].splice(deleteButton.classList[1], 1);
-    localStorage.setItem("my-array", JSON.stringify(toDoArray));
+    setTasks(toDoArray);
   });
   const check = document.createElement("input");
-  check.classList.add("check-box");
+  check.classList.add("check-box", `${listIndex}`);
   check.setAttribute("type", "checkbox");
   todoContainer.appendChild(check);
   todoContainer.appendChild(todoText);
@@ -76,17 +74,17 @@ function addToDo() {
   toDoArray["my-todo"].push({
     priority: prioritySelector.value,
     date: new Date().toLocaleString("en-GB"),
-    content: textInput.value,
+    text: textInput.value,
   });
   divCreator(
     toDoArray["my-todo"][toDoArray["my-todo"].length - 1]["priority"],
     toDoArray["my-todo"][toDoArray["my-todo"].length - 1]["date"],
-    toDoArray["my-todo"][toDoArray["my-todo"].length - 1]["content"]
+    toDoArray["my-todo"][toDoArray["my-todo"].length - 1]["text"]
   );
   textInput.value = "";
   textInput.focus();
   counter.innerText = toDoArray["my-todo"].length;
-  localStorage.setItem("my-array", JSON.stringify(toDoArray));
+  setTasks(toDoArray);
 }
 
 addButton.addEventListener("click", addToDo);
@@ -106,43 +104,76 @@ function sort() {
     list.remove();
   }
   for (let todo of toDoArray["my-todo"]) {
-    divCreator(todo["priority"], todo["date"], todo["content"]);
+    divCreator(todo["priority"], todo["date"], todo["text"]);
   }
   listIndex = 0;
-  localStorage.setItem("my-array", JSON.stringify(toDoArray));
+  setTasks(toDoArray);
 }
 sortButton.addEventListener("click", sort);
 
-// async function post() {
-//   let response = await fetch(apiUrl, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//       "X-Master-Key": myKey,
-//     },
-//     body: JSON.stringify(toDoArray),
-//   });
-//   response = await response.json();
-//   console.log(response["metadata"]["id"]);
-// }
+async function post() {
+  let response = await fetch(apiUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Master-Key": myKey,
+    },
+    body: JSON.stringify(toDoArray),
+  });
+  response = await response.json();
+  console.log(response["metadata"]["id"]);
+}
 // post();
-// async function getTasks() {
-//   const response = await fetch(apiUrl, {
-//     method: "GET",
-//     headers: {
-//       "X-Master-Key": xKey,
-//     },
-//   });
-//   return response["record"];
-// }
+async function getTasks() {
+  let response = await fetch(`${apiUrl}/latest`, {
+    method: "GET",
+    headers: {
+      "X-Master-Key": myKey,
+    },
+  });
+  response = await response.json();
+  return response["record"];
+}
 
-// async function setTasks(data) {
-//   const response = await fetch(apiUrl, {
-//     method: "PUT",
-//     headers: {
-//       "Content-Type": "application/json",
-//       "X-Master-Key": xKey,
-//     },
-//     body: JSON.stringify(data),
-//   });
-// }
+async function setTasks(data) {
+  const response = await fetch(apiUrl, {
+    method: "PUT",
+    headers: {
+      referer: "",
+      "Content-Type": "application/json",
+      "X-Master-Key": myKey,
+    },
+    body: JSON.stringify(data),
+  });
+  return response.json();
+}
+
+function darkmode() {
+  if (!isdarkmode) {
+    isdarkmode = true;
+    const darkModeButton = document.getElementById("dark-mode");
+    const li = document.getElementsByTagName("LI");
+    const h1 = document.getElementById("h1");
+    document.body.style.backgroundImage = "url('./darkmode background.jpg')";
+    document.body.style.color = "white";
+    h1.style.color = "white";
+    for (let i = 0; i < li.length; i++) {
+      li[i].style.backgroundColor = "#7E8B91";
+    }
+    darkModeButton.innerText = "Bright Mode";
+  } else {
+    isdarkmode = false;
+    const darkModeButton = document.getElementById("dark-mode");
+    const li = document.getElementsByTagName("LI");
+    const h1 = document.getElementById("h1");
+    document.body.style.backgroundImage = "url('./background.jpg')";
+    document.body.style.color = "black";
+    h1.style.color = "black";
+    for (let i = 0; i < li.length; i++) {
+      li[i].style.backgroundColor = " rgba(248, 249, 250, 0.6)";
+    }
+    darkModeButton.innerText = "Dark Mode";
+  }
+}
+const darkModeButton = document.getElementById("dark-mode");
+darkModeButton.addEventListener("click", darkmode);
