@@ -98,3 +98,26 @@ li:nth-child(odd) {
   width: 16px;
   height: 16px;
 }
+#dark-mode {
+  background: linear-gradient(to bottom, #112917 5%, #656c6e 100%);
+  background-color: #112917;
+  border-radius: 28px;
+  border: 1px solid #ffffff;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 17px;
+  padding: 12px 12px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #2f6627;
+  margin-top: 2%;
+}
+#dark-mode:hover {
+  background: linear-gradient(to bottom, #656c6e 5%, #112917 100%);
+  background-color: #656c6e;
+}
+#dark-mode:active {
+  position: relative;
+  top: 1px;
+}

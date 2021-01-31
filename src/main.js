@@ -1,8 +1,5 @@
 "use strict";
-// const myKey = "$2b$10$BGGGF8ElZbzLBwv5fGJ5zOtgmBQcZgpCYvK6RJuDfjxK/ZU4vFt6.";
-// let id = "60166ab713b20d48e8bf6d48";
-// const apiUrl = `https://api.jsonbin.io/v3/b/${id}/latest`;
-
+let isdarkmode = false;
 const controlSection = document.getElementById("control-section");
 const viewSection = document.getElementById("view-section");
 const prioritySelector = document.getElementById("priority-selector");
@@ -113,36 +110,32 @@ function sort() {
 }
 sortButton.addEventListener("click", sort);
 
-// async function post() {
-//   let response = await fetch(apiUrl, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//       "X-Master-Key": myKey,
-//     },
-//     body: JSON.stringify(toDoArray),
-//   });
-//   response = await response.json();
-//   console.log(response["metadata"]["id"]);
-// }
-// post();
-// async function getTasks() {
-//   const response = await fetch(apiUrl, {
-//     method: "GET",
-//     headers: {
-//       "X-Master-Key": xKey,
-//     },
-//   });
-//   return response["record"];
-// }
-
-// async function setTasks(data) {
-//   const response = await fetch(apiUrl, {
-//     method: "PUT",
-//     headers: {
-//       "Content-Type": "application/json",
-//       "X-Master-Key": xKey,
-//     },
-//     body: JSON.stringify(data),
-//   });
-// }
+function darkmode() {
+  if (!isdarkmode) {
+    isdarkmode = true;
+    const darkModeButton = document.getElementById("dark-mode");
+    const li = document.getElementsByTagName("LI");
+    const h1 = document.getElementById("h1");
+    document.body.style.backgroundImage = "url('./darkmode background.jpg')";
+    document.body.style.color = "white";
+    h1.style.color = "white";
+    for (let i = 0; i < li.length; i++) {
+      li[i].style.backgroundColor = "#7E8B91";
+    }
+    darkModeButton.innerText = "Bright Mode";
+  } else {
+    isdarkmode = false;
+    const darkModeButton = document.getElementById("dark-mode");
+    const li = document.getElementsByTagName("LI");
+    const h1 = document.getElementById("h1");
+    document.body.style.backgroundImage = "url('./background.jpg')";
+    document.body.style.color = "black";
+    h1.style.color = "black";
+    for (let i = 0; i < li.length; i++) {
+      li[i].style.backgroundColor = " rgba(248, 249, 250, 0.6)";
+    }
+    darkModeButton.innerText = "Dark Mode";
+  }
+}
+const darkModeButton = document.getElementById("dark-mode");
+darkModeButton.addEventListener("click", darkmode);
