@@ -1,4 +1,6 @@
 "use strict";
+const myKey = "$2b$10$BGGGF8ElZbzLBwv5fGJ5zOtgmBQcZgpCYvK6RJuDfjxK/ZU4vFt6.";
+const apiUrl = "https://api.jsonbin.io/v3/b/60128aba9f55707f6dfd26d4/latest";
 const controlSection = document.getElementById("control-section");
 const viewSection = document.getElementById("view-section");
 const prioritySelector = document.getElementById("priority-selector");
@@ -7,6 +9,7 @@ const addButton = document.getElementById("add-button");
 const textInput = document.getElementById("text-input");
 const counter = document.getElementById("counter");
 const sortButton = document.getElementById("sort-button");
+let listIndex = 0;
 let toDoArray = {
   "my-todo": [],
 };
@@ -17,6 +20,7 @@ function onload() {
     toDoArray = saved;
     counter.innerText = toDoArray["my-todo"].length;
   }
+  listIndex = 0;
 }
 if (localStorage.getItem("my-array") !== null) {
   onload();
@@ -44,10 +48,12 @@ function divCreator(priority, date, content) {
   const deleteButton = document.createElement("button");
   const deleteIcon = document.createElement("i");
   deleteIcon.classList.add("material-icons");
-  deleteButton.classList.add("delete-button");
+  deleteButton.classList.add("delete-button", `${listIndex}`);
   deleteIcon.innerText = "delete";
   deleteButton.addEventListener("click", () => {
     todoContainer.parentNode.style.display = "none";
+    toDoArray["my-todo"].splice(listIndex, 1);
+    localStorage.setItem("my-array", JSON.stringify(toDoArray));
   });
   const check = document.createElement("input");
   check.classList.add("check-box");
@@ -61,6 +67,7 @@ function divCreator(priority, date, content) {
   const li = document.createElement("li");
   li.appendChild(todoContainer);
   theList.appendChild(li);
+  listIndex++;
 }
 //adding a todo container to the list
 function addToDo() {
@@ -97,3 +104,24 @@ function sort() {
   localStorage.setItem("my-array", JSON.stringify(toDoArray));
 }
 sortButton.addEventListener("click", sort);
+
+// async function getTasks() {
+//   const response = await fetch(apiUrl, {
+//     method: "GET",
+//     headers: {
+//       "X-Master-Key": xKey,
+//     },
+//   });
+//   return response["record"];
+// }
+
+// async function setTasks(data) {
+//   const response = await fetch(apiUrl, {
+//     method: "PUT",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "X-Master-Key": xKey,
+//     },
+//     body: JSON.stringify(data),
+//   });
+// }
