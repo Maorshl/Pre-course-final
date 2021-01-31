@@ -2,6 +2,7 @@
 const myKey = "$2b$10$BGGGF8ElZbzLBwv5fGJ5zOtgmBQcZgpCYvK6RJuDfjxK/ZU4vFt6.";
 let id = "60166ab713b20d48e8bf6d48";
 const apiUrl = `https://api.jsonbin.io/v3/b/${id}`;
+
 let isdarkmode = false;
 const controlSection = document.getElementById("control-section");
 const viewSection = document.getElementById("view-section");
@@ -26,44 +27,37 @@ async function onload() {
 }
 onload();
 
-function elementCreator(element, className, text = null, appendTo = null) {
-  const todoText = document.createElement(element);
-  todoText.classList.add(className);
-  todoText.innerText = text;
-  appendTo.appendChild(todoText);
+function elementCreator(tagName, className, innerText = null) {
+  const element = document.createElement(tagName);
+  element.classList.add(className);
+  if (innerText) {
+    element.innerText = innerText;
+  }
+  return element;
 }
 // creating the divs and the elements inside and appending it to the list in the view section
 function divCreator(priority, date, content) {
-  const todoContainer = document.createElement("div");
-  todoContainer.classList.add("todo-container");
-  const todoText = document.createElement("div");
-  todoText.classList.add("todo-text");
-  todoText.innerText = content;
-  const todoCreatedAt = document.createElement("div");
-  todoCreatedAt.classList.add("todo-created-at");
-  todoCreatedAt.innerText = date;
-  const todoPriority = document.createElement("div");
-  todoPriority.classList.add("todo-priority");
-  todoPriority.innerText = priority;
+  const todoContainer = elementCreator("div", "todo-container");
+
   const deleteButton = document.createElement("button");
-  const deleteIcon = document.createElement("i");
-  deleteIcon.classList.add("material-icons");
   deleteButton.classList.add("delete-button", `${listIndex}`);
-  deleteIcon.innerText = "delete";
   deleteButton.addEventListener("click", () => {
     todoContainer.parentNode.style.display = "none";
     toDoArray["my-todo"].splice(deleteButton.classList[1], 1);
     setTasks(toDoArray);
   });
+
   const check = document.createElement("input");
   check.classList.add("check-box", `${listIndex}`);
   check.setAttribute("type", "checkbox");
+
   todoContainer.appendChild(check);
-  todoContainer.appendChild(todoText);
-  todoContainer.appendChild(todoCreatedAt);
-  todoContainer.appendChild(todoPriority);
+  todoContainer.appendChild(elementCreator("div", "todo-text", content));
+  todoContainer.appendChild(elementCreator("div", "todo-created-at", date));
+  todoContainer.appendChild(elementCreator("div", "todo-priority", priority));
   todoContainer.appendChild(deleteButton);
-  deleteButton.appendChild(deleteIcon);
+  deleteButton.appendChild(elementCreator("i", "material-icons", "delete"));
+
   const li = document.createElement("li");
   li.appendChild(todoContainer);
   theList.appendChild(li);
