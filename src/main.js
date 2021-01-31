@@ -1,6 +1,8 @@
 "use strict";
-const myKey = "$2b$10$BGGGF8ElZbzLBwv5fGJ5zOtgmBQcZgpCYvK6RJuDfjxK/ZU4vFt6.";
-const apiUrl = "https://api.jsonbin.io/v3/b/60128aba9f55707f6dfd26d4/latest";
+// const myKey = "$2b$10$BGGGF8ElZbzLBwv5fGJ5zOtgmBQcZgpCYvK6RJuDfjxK/ZU4vFt6.";
+// let id = "60166ab713b20d48e8bf6d48";
+// const apiUrl = `https://api.jsonbin.io/v3/b/${id}/latest`;
+
 const controlSection = document.getElementById("control-section");
 const viewSection = document.getElementById("view-section");
 const prioritySelector = document.getElementById("priority-selector");
@@ -52,7 +54,7 @@ function divCreator(priority, date, content) {
   deleteIcon.innerText = "delete";
   deleteButton.addEventListener("click", () => {
     todoContainer.parentNode.style.display = "none";
-    toDoArray["my-todo"].splice(listIndex, 1);
+    toDoArray["my-todo"].splice(deleteButton.classList[1], 1);
     localStorage.setItem("my-array", JSON.stringify(toDoArray));
   });
   const check = document.createElement("input");
@@ -88,7 +90,12 @@ function addToDo() {
 }
 
 addButton.addEventListener("click", addToDo);
-
+textInput.addEventListener("keyup", (event) => {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    addButton.click();
+  }
+});
 // sorting the list by priority
 function sort() {
   toDoArray["my-todo"].sort((a, b) => {
@@ -101,10 +108,24 @@ function sort() {
   for (let todo of toDoArray["my-todo"]) {
     divCreator(todo["priority"], todo["date"], todo["content"]);
   }
+  listIndex = 0;
   localStorage.setItem("my-array", JSON.stringify(toDoArray));
 }
 sortButton.addEventListener("click", sort);
 
+// async function post() {
+//   let response = await fetch(apiUrl, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "X-Master-Key": myKey,
+//     },
+//     body: JSON.stringify(toDoArray),
+//   });
+//   response = await response.json();
+//   console.log(response["metadata"]["id"]);
+// }
+// post();
 // async function getTasks() {
 //   const response = await fetch(apiUrl, {
 //     method: "GET",
