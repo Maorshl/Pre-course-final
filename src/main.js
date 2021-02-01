@@ -63,6 +63,7 @@ function divCreator(priority, date, content) {
   theList.appendChild(li);
   listIndex++;
 }
+
 //adding a todo container to the list
 function addToDo() {
   toDoArray["my-todo"].push({
@@ -88,6 +89,7 @@ textInput.addEventListener("keyup", (event) => {
     addButton.click();
   }
 });
+
 // sorting the list by priority
 function sort() {
   toDoArray["my-todo"].sort((a, b) => {
@@ -105,19 +107,6 @@ function sort() {
 }
 sortButton.addEventListener("click", sort);
 
-async function post() {
-  let response = await fetch(apiUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Master-Key": myKey,
-    },
-    body: JSON.stringify(toDoArray),
-  });
-  response = await response.json();
-  console.log(response["metadata"]["id"]);
-}
-// post();
 async function getTasks() {
   let response = await fetch(`${apiUrl}/latest`, {
     method: "GET",
