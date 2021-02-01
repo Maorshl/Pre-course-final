@@ -131,31 +131,37 @@ async function setTasks(data) {
   return response.json();
 }
 
+const appearanceChange = (dark, imageUrl, bodyColor, listColor, buttonText) => {
+  isdarkmode = dark;
+  const darkModeButton = document.getElementById("dark-mode");
+  const li = document.getElementsByTagName("LI");
+  const h1 = document.getElementById("h1");
+  document.body.style.backgroundImage = `url('./${imageUrl}')`;
+  document.body.style.color = bodyColor;
+  h1.style.color = bodyColor;
+  for (let i = 0; i < li.length; i++) {
+    li[i].style.backgroundColor = listColor;
+  }
+  darkModeButton.innerText = buttonText;
+};
+
 function darkmode() {
   if (!isdarkmode) {
-    isdarkmode = true;
-    const darkModeButton = document.getElementById("dark-mode");
-    const li = document.getElementsByTagName("LI");
-    const h1 = document.getElementById("h1");
-    document.body.style.backgroundImage = "url('./darkmode background.jpg')";
-    document.body.style.color = "white";
-    h1.style.color = "white";
-    for (let i = 0; i < li.length; i++) {
-      li[i].style.backgroundColor = "#7E8B91";
-    }
-    darkModeButton.innerText = "Bright Mode";
+    appearanceChange(
+      true,
+      "darkmode background.jpg",
+      "white",
+      "#7E8B91",
+      "Bright Mode"
+    );
   } else {
-    isdarkmode = false;
-    const darkModeButton = document.getElementById("dark-mode");
-    const li = document.getElementsByTagName("LI");
-    const h1 = document.getElementById("h1");
-    document.body.style.backgroundImage = "url('./background.jpg')";
-    document.body.style.color = "black";
-    h1.style.color = "black";
-    for (let i = 0; i < li.length; i++) {
-      li[i].style.backgroundColor = " rgba(248, 249, 250, 0.6)";
-    }
-    darkModeButton.innerText = "Dark Mode";
+    appearanceChange(
+      false,
+      "background.jpg",
+      "black",
+      " rgba(248, 249, 250, 0.6)",
+      "Dark Mode"
+    );
   }
 }
 const darkModeButton = document.getElementById("dark-mode");
