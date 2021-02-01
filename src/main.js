@@ -25,11 +25,13 @@ if (localStorage.getItem("my-array") !== null) {
   onload();
 }
 
-function elementCreator(element, className, text = null, appendTo = null) {
-  const todoText = document.createElement(element);
-  todoText.classList.add(className);
-  todoText.innerText = text;
-  appendTo.appendChild(todoText);
+function elementCreator(tagName, className, innerText = null) {
+  const element = document.createElement(tagName);
+  element.classList.add(className);
+  if (innerText) {
+    element.innerText = innerText;
+  }
+  return element;
 }
 // creating the divs and the elements inside and appending it to the list in the view section
 function divCreator(priority, date, content) {
