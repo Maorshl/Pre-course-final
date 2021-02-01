@@ -12,11 +12,13 @@ const addButton = document.getElementById("add-button");
 const textInput = document.getElementById("text-input");
 const counter = document.getElementById("counter");
 const sortButton = document.getElementById("sort-button");
+const loading = document.getElementById("lds-ring");
 let listIndex = 0;
 let toDoArray = {
   "my-todo": [],
 };
 async function onload() {
+  loading.style.display = "block";
   const saved = await getTasks();
   for (let todo of saved["my-todo"]) {
     divCreator(todo["priority"], todo["date"], todo["text"]);
@@ -24,8 +26,13 @@ async function onload() {
     counter.innerText = toDoArray["my-todo"].length;
   }
   listIndex = 0;
+  loading.style.display = "none";
 }
-onload();
+try {
+  onload();
+} catch (error) {
+  console.error(error);
+}
 
 function elementCreator(tagName, className, innerText = null) {
   const element = document.createElement(tagName);
@@ -44,7 +51,11 @@ function divCreator(priority, date, content) {
   deleteButton.addEventListener("click", () => {
     todoContainer.parentNode.style.display = "none";
     toDoArray["my-todo"].splice(deleteButton.classList[1], 1);
-    setTasks(toDoArray);
+    try {
+      setTasks(toDoArray);
+    } catch (error) {
+      console.error(error);
+    }
   });
 
   const check = document.createElement("input");
@@ -79,7 +90,11 @@ function addToDo() {
   textInput.value = "";
   textInput.focus();
   counter.innerText = toDoArray["my-todo"].length;
-  setTasks(toDoArray);
+  try {
+    setTasks(toDoArray);
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 addButton.addEventListener("click", addToDo);
@@ -103,11 +118,16 @@ function sort() {
     divCreator(todo["priority"], todo["date"], todo["text"]);
   }
   listIndex = 0;
-  setTasks(toDoArray);
+  try {
+    setTasks(toDoArray);
+  } catch (error) {
+    console.error(error);
+  }
 }
 sortButton.addEventListener("click", sort);
 
 async function getTasks() {
+  loading.style.display = "block";
   let response = await fetch(`${apiUrl}/latest`, {
     method: "GET",
     headers: {
@@ -115,10 +135,12 @@ async function getTasks() {
     },
   });
   response = await response.json();
+  loading.style.display = "none";
   return response["record"];
 }
 
 async function setTasks(data) {
+  loading.style.display = "block";
   const response = await fetch(apiUrl, {
     method: "PUT",
     headers: {
@@ -128,6 +150,7 @@ async function setTasks(data) {
     },
     body: JSON.stringify(data),
   });
+  loading.style.display = "none";
   return response.json();
 }
 
