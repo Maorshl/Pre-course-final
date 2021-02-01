@@ -14,8 +14,8 @@ you can visit the app from your device on GitHub Pages:
 
 ## Resources
 
-[MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[W3Schools](https://www.w3schools.com/)
+- [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- [W3Schools](https://www.w3schools.com/)
 
 ## Bonuses
 
