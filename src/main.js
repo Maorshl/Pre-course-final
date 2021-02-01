@@ -35,36 +35,28 @@ function elementCreator(tagName, className, innerText = null) {
 }
 // creating the divs and the elements inside and appending it to the list in the view section
 function divCreator(priority, date, content) {
-  const todoContainer = document.createElement("div");
-  todoContainer.classList.add("todo-container");
-  const todoText = document.createElement("div");
-  todoText.classList.add("todo-text");
-  todoText.innerText = content;
-  const todoCreatedAt = document.createElement("div");
-  todoCreatedAt.classList.add("todo-created-at");
-  todoCreatedAt.innerText = date;
-  const todoPriority = document.createElement("div");
-  todoPriority.classList.add("todo-priority");
-  todoPriority.innerText = priority;
+  const todoContainer = elementCreator("div", "todo-container");
+
   const deleteButton = document.createElement("button");
-  const deleteIcon = document.createElement("i");
-  deleteIcon.classList.add("material-icons");
   deleteButton.classList.add("delete-button", `${listIndex}`);
-  deleteIcon.innerText = "delete";
   deleteButton.addEventListener("click", () => {
     todoContainer.parentNode.style.display = "none";
     toDoArray["my-todo"].splice(deleteButton.classList[1], 1);
+    counter.innerText = toDoArray["my-todo"].length;
     localStorage.setItem("my-array", JSON.stringify(toDoArray));
   });
+
   const check = document.createElement("input");
-  check.classList.add("check-box");
+  check.classList.add("check-box", `${listIndex}`);
   check.setAttribute("type", "checkbox");
+
   todoContainer.appendChild(check);
-  todoContainer.appendChild(todoText);
-  todoContainer.appendChild(todoCreatedAt);
-  todoContainer.appendChild(todoPriority);
+  todoContainer.appendChild(elementCreator("div", "todo-text", content));
+  todoContainer.appendChild(elementCreator("div", "todo-created-at", date));
+  todoContainer.appendChild(elementCreator("div", "todo-priority", priority));
   todoContainer.appendChild(deleteButton);
-  deleteButton.appendChild(deleteIcon);
+  deleteButton.appendChild(elementCreator("i", "material-icons", "delete"));
+
   const li = document.createElement("li");
   li.appendChild(todoContainer);
   theList.appendChild(li);
@@ -112,31 +104,37 @@ function sort() {
 }
 sortButton.addEventListener("click", sort);
 
+const appearanceChange = (dark, imageUrl, bodyColor, listColor, buttonText) => {
+  isdarkmode = dark;
+  const darkModeButton = document.getElementById("dark-mode");
+  const li = document.getElementsByTagName("LI");
+  const h1 = document.getElementById("h1");
+  document.body.style.backgroundImage = `url('./${imageUrl}')`;
+  document.body.style.color = bodyColor;
+  h1.style.color = bodyColor;
+  for (let i = 0; i < li.length; i++) {
+    li[i].style.backgroundColor = listColor;
+  }
+  darkModeButton.innerText = buttonText;
+};
+
 function darkmode() {
   if (!isdarkmode) {
-    isdarkmode = true;
-    const darkModeButton = document.getElementById("dark-mode");
-    const li = document.getElementsByTagName("LI");
-    const h1 = document.getElementById("h1");
-    document.body.style.backgroundImage = "url('./darkmode background.jpg')";
-    document.body.style.color = "white";
-    h1.style.color = "white";
-    for (let i = 0; i < li.length; i++) {
-      li[i].style.backgroundColor = "#7E8B91";
-    }
-    darkModeButton.innerText = "Bright Mode";
+    appearanceChange(
+      true,
+      "darkmode background.jpg",
+      "white",
+      "#7E8B91",
+      "Bright Mode"
+    );
   } else {
-    isdarkmode = false;
-    const darkModeButton = document.getElementById("dark-mode");
-    const li = document.getElementsByTagName("LI");
-    const h1 = document.getElementById("h1");
-    document.body.style.backgroundImage = "url('./background.jpg')";
-    document.body.style.color = "black";
-    h1.style.color = "black";
-    for (let i = 0; i < li.length; i++) {
-      li[i].style.backgroundColor = " rgba(248, 249, 250, 0.6)";
-    }
-    darkModeButton.innerText = "Dark Mode";
+    appearanceChange(
+      false,
+      "background.jpg",
+      "black",
+      " rgba(248, 249, 250, 0.6)",
+      "Dark Mode"
+    );
   }
 }
 const darkModeButton = document.getElementById("dark-mode");
