@@ -17,16 +17,18 @@ let listIndex = 0;
 let toDoArray = {
   "my-todo": [],
 };
-async function onload() {
+function onload() {
   loading.style.display = "block";
-  const saved = await getTasks();
-  for (let todo of saved["my-todo"]) {
-    divCreator(todo["priority"], todo["date"], todo["text"]);
-    toDoArray = saved;
-    counter.innerText = toDoArray["my-todo"].length;
-  }
-  listIndex = 0;
-  loading.style.display = "none";
+  const request = getTasks();
+  request.then((saved) => {
+    for (let todo of saved["my-todo"]) {
+      divCreator(todo["priority"], todo["date"], todo["text"]);
+      toDoArray = saved;
+      counter.innerText = toDoArray["my-todo"].length;
+    }
+    listIndex = 0;
+    loading.style.display = "none";
+  });
 }
 try {
   onload();
@@ -126,22 +128,32 @@ function sort() {
 }
 sortButton.addEventListener("click", sort);
 
-async function getTasks() {
+function getTasks() {
+  let response;
   loading.style.display = "block";
-  let response = await fetch(`${apiUrl}/latest`, {
+  let request = fetch(`${apiUrl}/latest`, {
     method: "GET",
     headers: {
       "X-Master-Key": myKey,
     },
   });
-  response = await response.json();
-  loading.style.display = "none";
-  return response["record"];
+  return request.then((res) => {
+    if (!res.ok) {
+      throw new Error("GET Error", res.status);
+    }
+    response = res.json();
+    return response.then((res) => {
+      loading.style.display = "none";
+      return res["record"];
+    });
+  });
+
+  // return response["record"];
 }
 
-async function setTasks(data) {
+function setTasks(data) {
   loading.style.display = "block";
-  const response = await fetch(apiUrl, {
+  const request = fetch(apiUrl, {
     method: "PUT",
     headers: {
       referer: "",
@@ -150,8 +162,13 @@ async function setTasks(data) {
     },
     body: JSON.stringify(data),
   });
-  loading.style.display = "none";
-  return response.json();
+  return request.then((res) => {
+    if (!res.ok) {
+      throw new Error("GET Error", res.status);
+    }
+    loading.style.display = "none";
+    return res.json();
+  });
 }
 
 const appearanceChange = (dark, imageUrl, bodyColor, listColor, buttonText) => {
