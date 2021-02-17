@@ -1,7 +1,7 @@
 "use strict";
 const myKey = "$2b$10$BGGGF8ElZbzLBwv5fGJ5zOtgmBQcZgpCYvK6RJuDfjxK/ZU4vFt6.";
-let id = "60166ab713b20d48e8bf6d48";
-const apiUrl = `https://api.jsonbin.io/v3/b/${id}`;
+let id = "40f5d658-c182-4662-a997-22b5279930f3";
+const apiUrl = `http://localhost:3000/b/${id}`;
 
 let isdarkmode = false;
 const controlSection = document.getElementById("control-section");
@@ -17,9 +17,11 @@ let listIndex = 0;
 let toDoArray = {
   "my-todo": [],
 };
+
 async function onload() {
   loading.style.display = "block";
   const saved = await getTasks();
+  console.log(saved);
   for (let todo of saved["my-todo"]) {
     divCreator(todo["priority"], todo["date"], todo["text"]);
     toDoArray = saved;
@@ -128,15 +130,12 @@ sortButton.addEventListener("click", sort);
 
 async function getTasks() {
   loading.style.display = "block";
-  let response = await fetch(`${apiUrl}/latest`, {
+  let response = await fetch(`${apiUrl}`, {
     method: "GET",
-    headers: {
-      "X-Master-Key": myKey,
-    },
   });
   response = await response.json();
   loading.style.display = "none";
-  return response["record"];
+  return response;
 }
 
 async function setTasks(data) {
@@ -144,14 +143,12 @@ async function setTasks(data) {
   const response = await fetch(apiUrl, {
     method: "PUT",
     headers: {
-      referer: "",
       "Content-Type": "application/json",
-      "X-Master-Key": myKey,
     },
     body: JSON.stringify(data),
   });
   loading.style.display = "none";
-  return response.json();
+  return response;
 }
 
 const appearanceChange = (dark, imageUrl, bodyColor, listColor, buttonText) => {
