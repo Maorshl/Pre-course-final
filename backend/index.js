@@ -17,5 +17,15 @@ app.get("/b/:id", (req, res) => {
   const requestedBin = fs.readFileSync(`./bin - ${requestedBinId}.json`);
   res.status(200).send(JSON.parse(requestedBin));
 });
+app.put("/b/:id", (req, res) => {
+  const { body } = req;
+  const requestedBinId = req.params.id;
+  fs.writeFileSync(
+    `bin - ${requestedBinId}.json`,
+    JSON.stringify(body, null, 4)
+  );
+  const newJson = fs.readFileSync(`./bin - ${requestedBinId}.json`);
+  res.status(200).send(JSON.parse(newJson));
+});
 
 app.listen(3000, () => console.log("app listening on port 3000"));
