@@ -17,6 +17,7 @@ app.get("/b/:id", (req, res) => {
   const requestedBin = fs.readFileSync(`./bin - ${requestedBinId}.json`);
   res.status(200).send(JSON.parse(requestedBin));
 });
+
 app.put("/b/:id", (req, res) => {
   const { body } = req;
   const requestedBinId = req.params.id;
@@ -26,6 +27,16 @@ app.put("/b/:id", (req, res) => {
   );
   const newJson = fs.readFileSync(`./bin - ${requestedBinId}.json`);
   res.status(200).send(JSON.parse(newJson));
+});
+
+app.delete("/b/:id", (req, res) => {
+  const requestedBinId = req.params.id;
+  fs.unlinkSync(`./bin - ${requestedBinId}.json`, (error) => {
+    if (error) {
+      console.error(error);
+    }
+  });
+  res.status(200).send(`bin - ${requestedBinId} has been deleted successfully`);
 });
 
 app.listen(3000, () => console.log("app listening on port 3000"));
