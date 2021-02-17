@@ -21,7 +21,6 @@ let toDoArray = {
 async function onload() {
   loading.style.display = "block";
   const saved = await getTasks();
-  console.log(saved);
   for (let todo of saved["my-todo"]) {
     divCreator(todo["priority"], todo["date"], todo["text"]);
     toDoArray = saved;
