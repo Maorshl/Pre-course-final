@@ -46,6 +46,7 @@ function elementCreator(tagName, className, innerText = null) {
 // creating the divs and the elements inside and appending it to the list in the view section
 function divCreator(priority, date, content) {
   const todoContainer = elementCreator("div", "todo-container");
+  const textContainer = elementCreator("div", "todo-text", content)
 
   const deleteButton = document.createElement("button");
   deleteButton.classList.add("delete-button", `${listIndex}`);
@@ -59,16 +60,30 @@ function divCreator(priority, date, content) {
     }
   });
 
+  const editButton = document.createElement("button");
+  editButton.classList.add("edit-button", `${listIndex}`);
+  editButton.addEventListener("click", () => {
+    const newText = prompt("Enter new task:")
+    toDoArray["my-todo"][editButton.classList[1]]["text"] = newText
+    textContainer.innerText = newText
+    try {
+      setTasks(toDoArray);
+    } catch (error) {
+      console.error(error);
+    }
+  });
   const check = document.createElement("input");
   check.classList.add("check-box", `${listIndex}`);
   check.setAttribute("type", "checkbox");
 
   todoContainer.appendChild(check);
-  todoContainer.appendChild(elementCreator("div", "todo-text", content));
+  todoContainer.appendChild(textContainer);
   todoContainer.appendChild(elementCreator("div", "todo-created-at", date));
   todoContainer.appendChild(elementCreator("div", "todo-priority", priority));
   todoContainer.appendChild(deleteButton);
+  todoContainer.appendChild(editButton);
   deleteButton.appendChild(elementCreator("i", "material-icons", "delete"));
+  editButton.appendChild(elementCreator("i", "material-icons", "edit"));
 
   const li = document.createElement("li");
   li.appendChild(todoContainer);

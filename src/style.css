@@ -149,6 +149,30 @@ li:nth-child(even) {
 #lds-ring div:nth-child(3) {
   animation-delay: -0.15s;
 }
+.edit-button {
+	box-shadow: 0px 1px 0px 0px #fff6af;
+	background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+	background-color:#ffec64;
+	border-radius:6px;
+	border:1px solid #ffaa22;
+	display:inline-block;
+	cursor:pointer;
+	color:#333333;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 6px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffee66;
+}
+.edit-button:hover {
+	background:linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
+	background-color:#ffab23;
+}
+.edit-button:active {
+	position:relative;
+	top:1px;
+}
 @keyframes lds-ring {
   0% {
     transform: rotate(0deg);
