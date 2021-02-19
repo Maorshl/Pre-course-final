@@ -51,8 +51,9 @@ function divCreator(priority, date, content) {
   const deleteButton = document.createElement("button");
   deleteButton.classList.add("delete-button", `${listIndex}`);
   deleteButton.addEventListener("click", () => {
-    todoContainer.parentNode.style.display = "none";
+    // todoContainer.parentNode.style.display = "none";
     toDoArray["my-todo"].splice(deleteButton.classList[1], 1);
+    removeAndPrint()
     try {
       setTasks(toDoArray);
     } catch (error) {
@@ -65,7 +66,8 @@ function divCreator(priority, date, content) {
   editButton.addEventListener("click", () => {
     const newText = prompt("Enter new task:")
     toDoArray["my-todo"][editButton.classList[1]]["text"] = newText
-    textContainer.innerText = newText
+    removeAndPrint()
+    // textContainer.innerText = newText
     try {
       setTasks(toDoArray);
     } catch (error) {
@@ -98,14 +100,9 @@ function addToDo() {
     date: new Date().toLocaleString("en-GB"),
     text: textInput.value,
   });
-  divCreator(
-    toDoArray["my-todo"][toDoArray["my-todo"].length - 1]["priority"],
-    toDoArray["my-todo"][toDoArray["my-todo"].length - 1]["date"],
-    toDoArray["my-todo"][toDoArray["my-todo"].length - 1]["text"]
-  );
+  removeAndPrint()
   textInput.value = "";
   textInput.focus();
-  counter.innerText = toDoArray["my-todo"].length;
   try {
     setTasks(toDoArray);
   } catch (error) {
@@ -120,11 +117,9 @@ textInput.addEventListener("keyup", (event) => {
     addButton.click();
   }
 });
-// sorting the list by priority
-function sort() {
-  toDoArray["my-todo"].sort((a, b) => {
-    return b["priority"] - a["priority"];
-  });
+
+function removeAndPrint() {
+  listIndex = 0;
   const todoContainers = document.querySelectorAll("li");
   for (let list of todoContainers) {
     list.remove();
@@ -132,7 +127,16 @@ function sort() {
   for (let todo of toDoArray["my-todo"]) {
     divCreator(todo["priority"], todo["date"], todo["text"]);
   }
-  listIndex = 0;
+  counter.innerText = toDoArray["my-todo"].length;
+  listIndex = 0
+}
+
+// sorting the list by priority
+function sort() {
+  toDoArray["my-todo"].sort((a, b) => {
+    return b["priority"] - a["priority"];
+  });
+  removeAndPrint()
   try {
     setTasks(toDoArray);
   } catch (error) {
