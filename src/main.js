@@ -120,7 +120,6 @@ textInput.addEventListener("keyup", (event) => {
     addButton.click();
   }
 });
-
 // sorting the list by priority
 function sort() {
   toDoArray["my-todo"].sort((a, b) => {
