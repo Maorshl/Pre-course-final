@@ -51,7 +51,6 @@ function divCreator(priority, date, content) {
   const deleteButton = document.createElement("button");
   deleteButton.classList.add("delete-button", `${listIndex}`);
   deleteButton.addEventListener("click", () => {
-    // todoContainer.parentNode.style.display = "none";
     toDoArray["my-todo"].splice(deleteButton.classList[1], 1);
     removeAndPrint()
     try {
@@ -67,7 +66,6 @@ function divCreator(priority, date, content) {
     const newText = prompt("Enter new task:")
     toDoArray["my-todo"][editButton.classList[1]]["text"] = newText
     removeAndPrint()
-    // textContainer.innerText = newText
     try {
       setTasks(toDoArray);
     } catch (error) {
