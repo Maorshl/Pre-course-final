@@ -1,5 +1,9 @@
 # To-do List
 
+## Version 1.0.1
+- This version of the To-Do list is working with a local API.
+### To make it work run "./backend" with Node.
+#### You can find the API [here](https://github.com/Maorshl/Restful-API)
 ## What does it do?
 
 - This web application is a basic to-do list which you can add a task with text, date added and a priority.
