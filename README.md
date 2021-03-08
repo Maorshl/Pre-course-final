@@ -10,7 +10,7 @@
 ## Where is it published?
 
 you can visit the app from your device on GitHub Pages:
-[To-Do list](https://maorshl.github.io/pre-course-2021-final-boilerplate/src/)
+[To-Do list](https://maorshl.github.io/Pre-course-final/src/)
 
 ## Resources
 
